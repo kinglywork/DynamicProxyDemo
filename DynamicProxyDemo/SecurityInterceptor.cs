@@ -15,7 +15,7 @@ namespace DynamicProxyDemo
         /// Class constructor
         ///</summary>
         ///<param name="obj">Instance of object to be proxied</param>
-        private SecurityInterceptor(object obj)
+        public SecurityInterceptor(object obj)
         {
             this._obj = obj;
         }
