@@ -20,15 +20,15 @@ namespace DynamicProxyDemo
 
         private static void TestStaticProxy()
         {
-            var handler = new SecurityInterceptor(new TestImpl());
-            var proxy = new TestImplProxy(handler, typeof(TestImpl));
+            var handler = new SecurityInterceptor(new TargetClass());
+            var proxy = new TargetClassStaticProxy(handler, typeof(TargetClass));
             proxy.TestFunctionOne();
             proxy.TestFunctionTwo(new object(), new object());
         }
 
         private static void TestDynamicProxy()
         {
-            var proxy = (ITest) SecurityInterceptor.Inject(new TestImpl());
+            var proxy = (ITest) SecurityInterceptor.Inject(new TargetClass());
             proxy.TestFunctionOne();
             proxy.TestFunctionTwo(new object(), new object());
         }
@@ -40,26 +40,26 @@ namespace DynamicProxyDemo
         object TestFunctionTwo(object a, object b);
     }
 
-    public class TestImpl : ITest
+    public class TargetClass : ITest
     {
         public void TestFunctionOne()
         {
-            Console.WriteLine("In TestImpl.TestFunctionOne()");
+            Console.WriteLine("In TargetClass.TestFunctionOne()");
         }
 
         public object TestFunctionTwo(object a, object b)
         {
-            Console.WriteLine("In TestImpl.TestFunctionTwo( Object a, Object b )");
+            Console.WriteLine("In TargetClass.TestFunctionTwo( Object a, Object b )");
             return null;
         }
     }
 
-    public class TestImplProxy : ITest
+    public class TargetClassStaticProxy : ITest
     {
         private readonly IInvocationHandler _handler;
         private readonly Type _targetType;
 
-        public TestImplProxy(IInvocationHandler handler, Type targetType)
+        public TargetClassStaticProxy(IInvocationHandler handler, Type targetType)
         {
             _handler = handler;
             _targetType = targetType;
